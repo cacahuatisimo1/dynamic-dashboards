@@ -5,9 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { DynamicRouter } from "./components/router/DynamicRouter";
+import { worker } from './mocks/browser';
 
 if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser');
   worker.start();
 }
 
