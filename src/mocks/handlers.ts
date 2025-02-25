@@ -1,36 +1,22 @@
 
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  rest.get('/api/*', (req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200),
-      ctx.json([])
-    );
+  http.get('/api/*', () => {
+    return HttpResponse.json([], { status: 200 });
   }),
 
-  rest.post('/api/*', (req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(201),
-      ctx.json({ id: Date.now(), ...req.body })
-    );
+  http.post('/api/*', async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json({ id: Date.now(), ...body }, { status: 201 });
   }),
 
-  rest.put('/api/:id', (req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200),
-      ctx.json({ id: req.params.id, ...req.body })
-    );
+  http.put('/api/:id', async ({ request, params }) => {
+    const body = await request.json();
+    return HttpResponse.json({ id: params.id, ...body }, { status: 200 });
   }),
 
-  rest.delete('/api/:id', (req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.status(200),
-      ctx.json({ success: true })
-    );
+  http.delete('/api/:id', ({ params }) => {
+    return HttpResponse.json({ success: true }, { status: 200 });
   }),
 ];
