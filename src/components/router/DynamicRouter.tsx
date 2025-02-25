@@ -3,8 +3,11 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import routes from '@/routes/routes.json';
 
-const loadComponent = (componentName: string) =>
-  lazy(() => import(`@/pages/${componentName}.tsx`));
+const loadComponent = (componentName: string) => {
+  // Remove .tsx extension if present and ensure proper path resolution
+  const name = componentName.replace('.tsx', '');
+  return lazy(() => import(`/src/pages/${name}.tsx`));
+};
 
 interface RouteConfig {
   path: string;
