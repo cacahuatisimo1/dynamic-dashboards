@@ -17,26 +17,26 @@
             "path": "/dashboard",
             "component": "DashboardLayout",
             "title": "Dashboard",
-            "requiresAuth": true,
+            "requiresAuth": false,
             "children": [
                 {
                     "path": "users",
                     "component": "UsersPage",
                     "title": "Usuarios",
                     "icon": "UsersIcon",
-                    "requiresAuth": true
+                    "requiresAuth": false
                 },
                 {
                     "path": "reset-password",
                     "component": "ResetPasswordPage",
                     "title": "Cambiar Contraseña",
-                    "requiresAuth": true
+                    "requiresAuth": false
                 },
                 {
                     "path": "profile",
                     "component": "ProfilePage",
                     "title": "Mi Perfil",
-                    "requiresAuth": true
+                    "requiresAuth": false
                 }
             ]
         }
