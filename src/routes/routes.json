@@ -1,0 +1,20 @@
+
+{
+  "routes": [
+    {
+      "path": "/",
+      "component": "Home",
+      "protected": false
+    },
+    {
+      "path": "/dashboard",
+      "component": "Dashboard",
+      "protected": true
+    },
+    {
+      "path": "/profile",
+      "component": "Profile",
+      "protected": true
+    }
+  ]
+}
