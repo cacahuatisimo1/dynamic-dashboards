@@ -9,28 +9,59 @@ const loadComponent = (componentName: string) =>
 interface RouteConfig {
   path: string;
   component: string;
-  protected: boolean;
+  title: string;
+  requiresAuth: boolean;
+  icon?: string;
+  children?: RouteConfig[];
 }
 
 export const DynamicRouter = ({ isAuthenticated = false }) => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
-        {(routes.routes as RouteConfig[]).map(({ path, component, protected: isProtected }) => (
+  const renderRoutes = (routes: RouteConfig[]) => {
+    return routes.map((route) => {
+      const Component = loadComponent(route.component);
+
+      if (route.children) {
+        return (
           <Route
-            key={path}
-            path={path}
+            key={route.path}
+            path={route.path}
             element={
-              isProtected && !isAuthenticated ? (
-                <Navigate to="/login" replace />
+              route.requiresAuth && !isAuthenticated ? (
+                <Navigate to="/" replace />
               ) : (
                 <Suspense fallback={<div>Loading...</div>}>
-                  {React.createElement(loadComponent(component))}
+                  <Component />
                 </Suspense>
               )
             }
-          />
-        ))}
+          >
+            {renderRoutes(route.children)}
+          </Route>
+        );
+      }
+
+      return (
+        <Route
+          key={route.path}
+          path={route.path}
+          element={
+            route.requiresAuth && !isAuthenticated ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Component />
+              </Suspense>
+            )
+          }
+        />
+      );
+    });
+  };
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        {renderRoutes(routes.routes as RouteConfig[])}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

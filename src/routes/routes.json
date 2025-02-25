@@ -1,20 +1,44 @@
 
 {
-  "routes": [
-    {
-      "path": "/",
-      "component": "Home",
-      "protected": false
-    },
-    {
-      "path": "/dashboard",
-      "component": "Dashboard",
-      "protected": true
-    },
-    {
-      "path": "/profile",
-      "component": "Profile",
-      "protected": true
-    }
-  ]
+    "routes": [
+        {
+            "path": "/",
+            "component": "LoginPage",
+            "title": "Iniciar Sesión",
+            "requiresAuth": false
+        },
+        {
+            "path": "/forgot-password",
+            "component": "ForgotPasswordPage",
+            "title": "Recuperar Contraseña",
+            "requiresAuth": false
+        },
+        {
+            "path": "/dashboard",
+            "component": "DashboardLayout",
+            "title": "Dashboard",
+            "requiresAuth": true,
+            "children": [
+                {
+                    "path": "users",
+                    "component": "UsersPage",
+                    "title": "Usuarios",
+                    "icon": "UsersIcon",
+                    "requiresAuth": true
+                },
+                {
+                    "path": "reset-password",
+                    "component": "ResetPasswordPage",
+                    "title": "Cambiar Contraseña",
+                    "requiresAuth": true
+                },
+                {
+                    "path": "profile",
+                    "component": "ProfilePage",
+                    "title": "Mi Perfil",
+                    "requiresAuth": true
+                }
+            ]
+        }
+    ]
 }
